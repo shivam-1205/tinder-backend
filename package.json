@@ -1,0 +1,19 @@
+{
+  "name": "tinder-backend",
+  "version": "1.0.0",
+  "description": "this is tinder backend",
+  "main": "index.js",
+  "scripts": {
+   "start":"node src/app.js",
+   "dev":"nodemon src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "tinder_Backend"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
