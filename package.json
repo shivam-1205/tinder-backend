@@ -4,8 +4,8 @@
   "description": "this is tinder backend",
   "main": "index.js",
   "scripts": {
-   "start":"node src/app.js",
-   "dev":"nodemon src/app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
