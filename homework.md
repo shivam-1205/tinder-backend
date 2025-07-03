@@ -141,3 +141,17 @@ res.send("user its me")
 app.get("/admin/dashboard", (req, res) => {
 res.send("Admin Dashboard");
 })
+
+
+## error
+
+## instance:  refers to the actual data stored within a database at a specific point in time, as well as the memory structures and processes used to manage that data;
+ 
+ ## model: refers to the logical structure and design that determines how data is organized, stored, and manipulated
+ ## schema: defines the logical structure of a database, including tables, columns, data types, and relationships between them
+
+ use:  this function and req handler will run come to our server 
+ it work for all route
+
+ handling the req and processing that json data is done by this code 
+ 

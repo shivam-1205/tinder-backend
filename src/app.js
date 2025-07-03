@@ -1,27 +1,30 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const {auth,authUser} =require("./middleware/auth")
-
-app.use("/admin",auth)
-app.use("/user",authUser)
 
 
-app.get("/user/users",authUser, (req, res) => {
-    res.send("user its me")
-});
+const connectDb = require("./config/dataBase");
+const cookieParser = require("cookie-parser");
 
+app.use(express.json());
+app.use(cookieParser());
 
-app.get("/user/users/me", (req, res) => {
-    res.send("user its me")
-})
+const authRouter = require("./router/auth");
+const profileRouter = require("./router/profile");
+const requestRouter = require("./router/request");
+const userRouter= require("./router/user")
 
-app.get("/admin/dashboard", (req, res) => {
-    res.send("Admin Dashboard");
-})
-app.get("/admin/deleteAcc", (req, res) => {
-    res.send("Admin Delete Account");
-})
+app.use("/", authRouter);
+app.use("/", profileRouter);
+app.use("/", requestRouter);
+app.use("/", userRouter )
 
-app.listen(3000, () => {
-    console.log("server started on port 3000");
-});
+connectDb()
+  .then(() => {
+    console.log("connected to db");
+    app.listen(3000, () => {
+      console.log("server started on port 3000");
+    });
+  })
+  .catch((err) => {
+    console.log("error connecting to db", err);
+  });

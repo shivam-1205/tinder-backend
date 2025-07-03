@@ -1,28 +1,21 @@
- const auth = ((req, res, next) => {
-  console.log("auth middleware");
-  const token = "xyz";
-  const  authHeader=token==="xyz";
-  if(!authHeader){
-       res.status(401).send("unauthorized");
-  }else{
-    console.log("auth success");
-    next();
-  }
-    
-});
- const authUser = ((req, res, next) => {
-  console.log("authUser middleware");
-  const token = "xyz";
-  const  authHeader=token==="xyz";
-  if(!authHeader){
-       res.status(401).send("unauthorized");
-  }else{
-    console.log("authUser success");
-    next();
-  }
-    
-});
-module.exports={
-    auth,
-    authUser
-}
+const jwt = require("jsonwebtoken");
+const User = require("../model/user");
+
+const authUser = async (req, res, next) => {
+      const {token}=req.cookies;
+        if(!token){
+          return res.status(401).json({message:"Unauthorized"})
+        }
+        const isVerified=await jwt.verify(token,"Devtinder#1205")
+        const {_id}=isVerified;
+        const user=await User.findById(_id);
+        if(!user){
+          return res.status(401).json({message:"Unauthorized"})
+        }
+        req.user=user;
+        next()
+};
+
+module.exports = {
+  authUser,
+};
