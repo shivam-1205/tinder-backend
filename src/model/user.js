@@ -67,6 +67,8 @@ const userSchema = new mongoose.Schema(
       default:
         "https://thumbs.dreamstime.com/b/vector-illustration-avatar-dummy-logo-collection-image-icon-stock-isolated-object-set-symbol-web-137160339.jpg",
 
+
+        // https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp
       validate(value) {
         if (!validate.isURL(value)) {
           throw new Error("PhotoUrl is not valid");

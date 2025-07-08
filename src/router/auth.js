@@ -28,7 +28,7 @@ authRouter.post("/signUp", async (req, res) => {
   }
 });
 
-authRouter.get("/login", async (req, res) => {
+authRouter.post("/login", async (req, res) => {
   try {
     const { Email, Password } = req.body;
     const user = await User.findOne({ Email });
@@ -43,7 +43,7 @@ authRouter.get("/login", async (req, res) => {
     //get from model/user getJwt and getAuth
     const token = await user.getJWT();
     res.cookie("token", token);
-    res.send({ message: "login success" });
+    res.send(user);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
