@@ -56,7 +56,7 @@ userRouter.get("/feed", authUser, async (req, res) => {
   try {
     const loggedInUser = req.user;
     const page= parseInt(req.query.page) || 1; // default to page 1 if not provided
-    const limit =parseInt(req.query.limit) || 10; // default to 10 items per page
+    let limit =parseInt(req.query.limit) || 10; // default to 10 items per page
      limit= limit>50?50:limit; // limit to 50 items per page
     const connectionRequest = await ConnectionRequest.find({
       // find all connection req (send / received)

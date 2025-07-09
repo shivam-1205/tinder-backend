@@ -33,12 +33,12 @@ authRouter.post("/login", async (req, res) => {
     const { Email, Password } = req.body;
     const user = await User.findOne({ Email });
     if (!user) {
-      throw new Error("email is not found");
+      throw new Error("Invalid Email or Password");
     }
  //this password is arg to pass another function value
     const isPasswordMatch = await user.validatePassword(Password);
     if (!isPasswordMatch) {
-      throw new Error("password not match");
+      throw new Error("Invalid Email or Password");
     }
     //get from model/user getJwt and getAuth
     const token = await user.getJWT();
@@ -48,6 +48,7 @@ authRouter.post("/login", async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+
 
 authRouter.post("/logout",async(req,res)=>{
       // res.clearCookie("token").status(200).send({ message: "logout success" });
