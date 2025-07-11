@@ -7,13 +7,13 @@ const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema(
   {
-    FirstName: {
+    firstName: {
       type: String,
       required: true,
       minLength: 4,
       maxLength: 30,
     },
-    LastName: {
+    lastName: {
       type: String,
       required: true,
       maxLength: 30,
@@ -23,20 +23,19 @@ const userSchema = new mongoose.Schema(
       //     }
       //   }
     },
-    Email: {
+    email: {
       type: String,
       lowercase: true,
       trim: true,
       unique: true,
       required: true,
-
       validate(value) {
         if (!validate.isEmail(value)) {
-          throw new Error("Email is not valid");
+          throw new Error("email is not valid");
         }
       },
     },
-  Password: {
+  password: {
       type: String,
       required: true,
       minLength: 8,
@@ -46,11 +45,11 @@ const userSchema = new mongoose.Schema(
       //     }
       // },
     },
-    Age: {
+    age: {
       type: Number,
       min: 18,
     },
-    Gender: {
+    gender: {
       type: String,
   enum:{
     values:["male", "female", "other"],
@@ -62,7 +61,7 @@ const userSchema = new mongoose.Schema(
       //   }
       // },
     },
-    PhotoUrl: {
+    photoUrl: {
       type: String,
       default:
         "https://thumbs.dreamstime.com/b/vector-illustration-avatar-dummy-logo-collection-image-icon-stock-isolated-object-set-symbol-web-137160339.jpg",
@@ -71,18 +70,18 @@ const userSchema = new mongoose.Schema(
         // https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp
       validate(value) {
         if (!validate.isURL(value)) {
-          throw new Error("PhotoUrl is not valid");
+          throw new Error("photoUrl is not valid");
         }
       },
     },
-    About: {
+    about: {
       type: String,
       default: "add some info about yourself",
     },
-    Skill: {
+    skill: {
       type: [String],
     },
-    Location: {
+    location: {
       type: String,
       default: "India",
     },
@@ -91,11 +90,12 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+userSchema.index({ email: 1 }, { unique: true });
 
 //  //
-//  userSchema.find({FirstName:"shivam", LastName:"singh"})
+//  userSchema.find({FirstName:"shivam", lastName:"singh"})
 // index is used to speed up the search query//1 ascending order, -1 descending order
-userSchema.index({ FirstName: 1, LastName: 1 }, { unique: true });
+userSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
 
 userSchema.methods.getJWT = async function () {
   const user = this; 
@@ -108,7 +108,7 @@ userSchema.methods.getJWT = async function () {
 
 userSchema.methods.validatePassword=async function (passwordInput){
 const user=this
-const passwordHash=user.Password
+const passwordHash=user.password
 
 const isPasswordMatch = await bcrypt.compare(passwordInput, passwordHash);
 return isPasswordMatch

@@ -51,7 +51,7 @@ requestRouter.post(
 
       res.json({
         message:
-          req.user.FirstName + " is " + status + " the " + toUser.FirstName,
+          req.user.firstName+ " is " + status + " the " + toUser.firstName,
         data,
       });
     } catch (err) {
@@ -93,7 +93,7 @@ requestRouter.post(
       const data = await connectionReq.save();
       res.json({
         message:
-          loggedInUser.FirstName + " is " + status + " the connection request",
+          loggedInUser.firstName+ " is " + status + " the connection request",
         data,
       });
     } catch (err) {

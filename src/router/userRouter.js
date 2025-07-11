@@ -4,7 +4,7 @@ const User  = require("../model/user");
 
 const { authUser } = require("../middleware/auth");
 const ConnectionRequest = require("../model/connectionRequest");
-const USER_SAFE_DATA = "FirstName LastName PhotoUrl Age Gender Skill";
+const USER_SAFE_DATA = "firstName lastName photoUrl age gender skill about";
 
 userRouter.get("/user/request/received", authUser, async (req, res) => {
   try {
@@ -13,7 +13,7 @@ userRouter.get("/user/request/received", authUser, async (req, res) => {
     const connectionRequests = await ConnectionRequest.find({
       toUserId: loggedInUserId,
       status: "interested",
-    }).populate("fromUserId", ["FirstName", "LastName", "Skill", "PhotoUrl", "Age", "Gender", "Skill"]); //you can use object also{"FirstName LastName skill" } // we use ref building relation 2 tables
+    }).populate("fromUserId", ["firstName", "lastName", "photoUrl", "age", "gender", "skill"]); //you can use object also{"firstName lastName skill" } // we use ref building relation 2 tables
 
     const data = connectionRequests.map((row) => row.fromUserId);
     res.json({
@@ -80,7 +80,7 @@ userRouter.get("/feed", authUser, async (req, res) => {
       ]
     }).select(USER_SAFE_DATA).skip((page -1)*limit).limit(limit);
 
-    res.status(200).send(users)
+    res.status(201).json({data:users})
   } catch (err) {
     res.status(400).send("error:" + err.message);
   }
