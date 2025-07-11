@@ -1,9 +1,9 @@
-"# tinder-backend" 
+<!-- "# tinder-backend" 
 
 app.get("/user", async (req, res) => {
-  const name = req.body.FirstName;
+  const name = req.body.firstName;
   try {
-    await User.findOne({ FirstName: name }).then((user) => {
+    await User.findOne({ firstName: name }).then((user) => {
       if (user.length == 0) {
         res.status(404).send("user not found");
       } else {
@@ -31,21 +31,21 @@ app.get("/feed", async (req, res) => {
 
 app.post("/signup", async (req, res) => {
   try {
-    const { FirstName, LastName, Password, Email, Age, Gender, Skill } =
+    const { firstName, lastName, password, email, age, gender, skill } =
       req.body;
     // validate the request body
     validateSignIn(req.body);
 
     // hash the password 
-    const passwordHash = await bcrypt.hash(Password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({
-      FirstName,
-      LastName,
-      Password: passwordHash, 
-      Email,
-      Age,
-      Gender,
-      Skill,
+      firstName,
+      lastName,
+      password: passwordHash, 
+      email,
+      age,
+      gender,
+      skill,
     });
     await user.save();
 
@@ -57,8 +57,8 @@ app.post("/signup", async (req, res) => {
 
 app.get("/login", async (req, res) => {
   try {
-    const { Email, Password } = req.body;
-    const user = await User.findOne({ Email: Email });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       throw new Error("invalid credentials");
@@ -67,9 +67,9 @@ app.get("/login", async (req, res) => {
     // compare the password with the hashed password
    
 
-    const isStrongPassword = await bcrypt.compare(Password, user.Password);
+    const isStrongpassword = await bcrypt.compare(password, user.password);
 
-    if (isStrongPassword) {
+    if (isStrongpassword) {
       // create a token
       // sign the token with the user id
       const token = await jwt.sign({ _id: user._id }, "Devtinder#1205");
@@ -101,12 +101,12 @@ app.patch("/user/:userId", async (req, res) => {
   // only allow these fields to be updated
   const allowedFields = [
     "userId",
-    "Skill",
-    "Location",
-    "About",
-    "PhotoUrl",
-    "Gender",
-    "Age",
+    "skill",
+    "location",
+    "about",
+    "photoUrl",
+    "gender",
+    "age",
   ];
 
   try {
@@ -178,12 +178,12 @@ requestRouter.patch("/user",authUser,async(req,res)=>{
        const userData=req.body;
        const allowedFields = [
         "userId",
-        "FirstName",
-        "LastName",
-        "Password",
-        "Age",
-        "Gender",
-        "Skill",
+        "firstName",
+        "lastName",
+        "password",
+        "age",
+        "gender",
+        "skill",
       ];
       const isUpdateAllowed= await Object.keys(req.body).every((key=>allowedFields.includes(key)))
       if (!isUpdateAllowed) {
@@ -204,4 +204,4 @@ requestRouter.patch("/user",authUser,async(req,res)=>{
 
 module.exports=requestRouter;
 
-
+ -->
