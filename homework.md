@@ -1,4 +1,4 @@
-diff diff : package.json and package-lock.json
+<!-- diff diff : package.json and package-lock.json
 what is ~ and ^ (teide and caret )
 
 note
@@ -154,4 +154,4 @@ res.send("Admin Dashboard");
  it work for all route
 
  handling the req and processing that json data is done by this code 
- 
+  -->

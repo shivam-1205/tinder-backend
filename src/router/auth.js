@@ -6,19 +6,19 @@ const User = require("../model/user");
 
 authRouter.post("/signUp", async (req, res) => {
   try {
-    const { FirstName, LastName, Password, Email, Age, Gender, Skill } =
+    const { firstName, lastName, password, email, age, gender, skill } =
       req.body;
     validateSignIn(req.body);
 
-    const passwordHash = await bcrypt.hash(Password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     const user = new User({
-      FirstName,
-      LastName,
-      Password: passwordHash, 
-      Email,
-      Age,
-      Gender,
-      Skill,
+      firstName,
+      lastName,
+      password: passwordHash, 
+      email,
+      age,
+      gender,
+      skill,
     });
   await user.save();
     
@@ -30,15 +30,15 @@ authRouter.post("/signUp", async (req, res) => {
 
 authRouter.post("/login", async (req, res) => {
   try {
-    const { Email, Password } = req.body;
-    const user = await User.findOne({ Email });
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if (!user) {
-      throw new Error("Invalid Email or Password");
+      throw new Error("Invalid email or Password");
     }
  //this password is arg to pass another function value
-    const isPasswordMatch = await user.validatePassword(Password);
+    const isPasswordMatch = await user.validatePassword(password);
     if (!isPasswordMatch) {
-      throw new Error("Invalid Email or Password");
+      throw new Error("Invalid email or Password");
     }
     //get from model/user getJwt and getAuth
     const token = await user.getJWT();
